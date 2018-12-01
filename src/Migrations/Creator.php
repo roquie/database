@@ -77,8 +77,6 @@ class Creator
      */
     public function create(string $name, ?string $table = null, bool $create = false): void
     {
-        Whois::print($this->notify);
-
         $this->creator->create($this->filesystem, ...func_get_args());
     }
 }
