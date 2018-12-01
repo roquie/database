@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migrations\Notify;
+namespace Roquie\Database\Migration\Notify;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\Output;

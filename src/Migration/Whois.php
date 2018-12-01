@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migrations;
+namespace Roquie\Database\Migration;
 
 class Whois
 {

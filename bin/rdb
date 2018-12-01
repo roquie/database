@@ -9,7 +9,7 @@ use Roquie\Database\Console\MigrateRefreshCommand;
 use Roquie\Database\Console\MigrateResetCommand;
 use Roquie\Database\Console\MigrateStatusCommand;
 use Roquie\Database\Console\MigrateUpCommand;
-use Roquie\Database\Migrations\Whois;
+use Roquie\Database\Migration\Whois;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput;

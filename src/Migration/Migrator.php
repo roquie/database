@@ -1,17 +1,17 @@
 <?php
 
-namespace Roquie\Database\Migrations;
+namespace Roquie\Database\Migration;
 
 use League\Flysystem\FilesystemInterface;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
-use Roquie\Database\Migrations\Creator\MigrationCreatorInterface as M;
-use Roquie\Database\Migrations\Repository\MigrationRepositoryInterface;
-use Roquie\Database\Migrations\Repository\SqlMigrationRepository;
+use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Migration\Creator\MigrationCreatorInterface as M;
+use Roquie\Database\Migration\Repository\MigrationRepositoryInterface;
+use Roquie\Database\Migration\Repository\SqlMigrationRepository;
 
 class Migrator
 {
     /**
-     * @var \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface
+     * @var \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
      */
     private $repository;
 
@@ -21,16 +21,16 @@ class Migrator
     private $filesystem;
 
     /**
-     * @var \Roquie\Database\Migrations\Notify\NotifyInterface
+     * @var \Roquie\Database\Migration\Notify\NotifyInterface
      */
     private $notify;
 
     /**
      * Migrator constructor.
      *
-     * @param \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface $repository
+     * @param \Roquie\Database\Migration\Repository\MigrationRepositoryInterface $repository
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Roquie\Database\Migrations\Notify\NotifyInterface $notify
+     * @param \Roquie\Database\Migration\Notify\NotifyInterface $notify
      */
     public function __construct(
         MigrationRepositoryInterface $repository,

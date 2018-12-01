@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Roquie\Database\Migrations\Repository;
+namespace Roquie\Database\Migration\Repository;
 
 use InvalidArgumentException;
 use PDO;
-use Roquie\Database\Migrations\Repository\MigrationRepositoryInterface as MR;
+use Roquie\Database\Migration\Repository\MigrationRepositoryInterface as MR;
 
 class MigrationRepositoryFactory
 {
     /**
      * @param object $database
      * @param string $table
-     * @return \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface
+     * @return \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
      */
     public static function create($database, string $table = MR::DEFAULT_TABLE): MR
     {

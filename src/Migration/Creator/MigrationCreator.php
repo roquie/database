@@ -1,12 +1,12 @@
 <?php
 
-namespace Roquie\Database\Migrations\Creator;
+namespace Roquie\Database\Migration\Creator;
 
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Roquie\Database\Migrations\Creator\MigrationCreatorInterface as M;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
+use Roquie\Database\Migration\Creator\MigrationCreatorInterface as M;
+use Roquie\Database\Migration\Notify\NotifyInterface;
 
 class MigrationCreator implements MigrationCreatorInterface
 {
@@ -16,14 +16,14 @@ class MigrationCreator implements MigrationCreatorInterface
     private $stubs;
 
     /**
-     * @var \Roquie\Database\Migrations\Notify\NotifyInterface
+     * @var \Roquie\Database\Migration\Notify\NotifyInterface
      */
     private $notify;
 
     /**
      * MigrationCreator constructor.
      *
-     * @param \Roquie\Database\Migrations\Notify\NotifyInterface $notify
+     * @param \Roquie\Database\Migration\Notify\NotifyInterface $notify
      */
     public function __construct(NotifyInterface $notify)
     {

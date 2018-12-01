@@ -6,16 +6,16 @@
  * Date: 18/11/2018
  */
 
-namespace Roquie\Database\Migrations;
+namespace Roquie\Database\Migration;
 
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Roquie\Database\Migrations\Notify\NotifyFactory;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
-use Roquie\Database\Migrations\Repository\DatabaseFactory;
-use Roquie\Database\Migrations\Repository\MigrationRepositoryFactory;
-use Roquie\Database\Migrations\Repository\MigrationRepositoryInterface;
+use Roquie\Database\Migration\Notify\NotifyFactory;
+use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Migration\Repository\DatabaseFactory;
+use Roquie\Database\Migration\Repository\MigrationRepositoryFactory;
+use Roquie\Database\Migration\Repository\MigrationRepositoryInterface;
 
 class Migrate
 {
@@ -28,7 +28,7 @@ class Migrate
     private $filesystem;
 
     /**
-     * @var \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface
+     * @var \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
      */
     private $migrationRepository;
 
@@ -55,7 +55,7 @@ class Migrate
      * @param $database
      * @param null|string $source
      * @param NotifyInterface|string|null $notify
-     * @return \Roquie\Database\Migrations\Migrate
+     * @return \Roquie\Database\Migration\Migrate
      */
     public static function new($database, ?string $source = self::DEFAULT_PATH, $notify = 'logger')
     {
@@ -77,7 +77,7 @@ class Migrate
     /**
      * Drop all tables and views in the database.
      *
-     * @return \Roquie\Database\Migrations\Migrate
+     * @return \Roquie\Database\Migration\Migrate
      */
     public function drop(): Migrate
     {
@@ -100,7 +100,7 @@ class Migrate
 
     /**
      * @param array $options
-     * @return \Roquie\Database\Migrations\Migrate
+     * @return \Roquie\Database\Migration\Migrate
      */
     public function run(array $options = []): Migrate
     {
@@ -111,7 +111,7 @@ class Migrate
 
     /**
      * @param array $options
-     * @return \Roquie\Database\Migrations\Migrate
+     * @return \Roquie\Database\Migration\Migrate
      */
     public function rollback(array $options = []): Migrate
     {
@@ -121,7 +121,7 @@ class Migrate
     }
 
     /**
-     * @return \Roquie\Database\Migrations\Migrate
+     * @return \Roquie\Database\Migration\Migrate
      */
     public function reset(): Migrate
     {
@@ -139,7 +139,7 @@ class Migrate
     }
 
     /**
-     * @return \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface
+     * @return \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
      */
     public function getMigrationRepository(): MigrationRepositoryInterface
     {
@@ -155,7 +155,7 @@ class Migrate
     }
 
     /**
-     * @return \Roquie\Database\Migrations\Migrator
+     * @return \Roquie\Database\Migration\Migrator
      */
     public function getMigrator()
     {
@@ -168,7 +168,7 @@ class Migrate
 
     /**
      * @param $database
-     * @return \Roquie\Database\Migrations\Repository\MigrationRepositoryInterface
+     * @return \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
      */
     protected function repo($database): MigrationRepositoryInterface
     {

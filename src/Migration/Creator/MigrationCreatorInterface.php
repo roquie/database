@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migrations\Creator;
+namespace Roquie\Database\Migration\Creator;
 
 use League\Flysystem\FilesystemInterface;
 

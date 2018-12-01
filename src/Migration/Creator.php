@@ -6,15 +6,15 @@
  * Date: 2018-12-01
  */
 
-namespace Roquie\Database\Migrations;
+namespace Roquie\Database\Migration;
 
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Roquie\Database\Migrations\Creator\CreatorFactory;
-use Roquie\Database\Migrations\Creator\MigrationCreatorInterface;
-use Roquie\Database\Migrations\Notify\NotifyFactory;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
+use Roquie\Database\Migration\Creator\CreatorFactory;
+use Roquie\Database\Migration\Creator\MigrationCreatorInterface;
+use Roquie\Database\Migration\Notify\NotifyFactory;
+use Roquie\Database\Migration\Notify\NotifyInterface;
 
 class Creator
 {
@@ -24,21 +24,21 @@ class Creator
     private $filesystem;
 
     /**
-     * @var \Roquie\Database\Migrations\Creator\MigrationCreatorInterface
+     * @var \Roquie\Database\Migration\Creator\MigrationCreatorInterface
      */
     private $creator;
 
     /**
-     * @var \Roquie\Database\Migrations\Notify\NotifyInterface|string
+     * @var \Roquie\Database\Migration\Notify\NotifyInterface|string
      */
     private $notify;
 
     /**
      * Creator constructor.
      *
-     * @param \Roquie\Database\Migrations\Creator\MigrationCreatorInterface $creator
+     * @param \Roquie\Database\Migration\Creator\MigrationCreatorInterface $creator
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Roquie\Database\Migrations\Notify\NotifyInterface|string $notify
+     * @param \Roquie\Database\Migration\Notify\NotifyInterface|string $notify
      */
     public function __construct(MigrationCreatorInterface $creator, FilesystemInterface $filesystem, $notify = 'logger')
     {
@@ -56,8 +56,8 @@ class Creator
      *
      * @param string $type
      * @param string $path
-     * @param \Roquie\Database\Migrations\Notify\NotifyInterface|string $notify
-     * @return \Roquie\Database\Migrations\Creator
+     * @param \Roquie\Database\Migration\Notify\NotifyInterface|string $notify
+     * @return \Roquie\Database\Migration\Creator
      */
     public static function new(string $type = 'default', string $path = Migrate::DEFAULT_PATH, $notify = 'logger'): Creator
     {

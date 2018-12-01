@@ -8,8 +8,8 @@
 
 namespace Roquie\Database\Console;
 
-use Roquie\Database\Migrations\Creator;
-use Roquie\Database\Migrations\Migrate;
+use Roquie\Database\Migration\Creator;
+use Roquie\Database\Migration\Migrate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

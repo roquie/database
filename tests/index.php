@@ -2,9 +2,9 @@
 
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use Roquie\Database\Migrations\Creator;
-use Roquie\Database\Migrations\Migrate;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
+use Roquie\Database\Migration\Creator;
+use Roquie\Database\Migration\Migrate;
+use Roquie\Database\Migration\Notify\NotifyInterface;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

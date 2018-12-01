@@ -8,11 +8,12 @@
 
 namespace Roquie\Database\Console;
 
-use Roquie\Database\Migrations\Migrate;
+use Roquie\Database\Migration\Migrate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Roquie\Database\Migration\Creator\MigrationCreatorInterface as M;
 
 class MigrateFreshCommand extends Command
 {
@@ -39,8 +40,16 @@ class MigrateFreshCommand extends Command
     {
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
 
+        $files = $migrate->getMigrator()->getMigrationFiles(M::TYPE_UP);
+        $migrate->drop();
+
+        if (count($files) < 1) {
+            $output->writeln('');
+            $output->writeln('<comment>Migration files not found</comment>');
+            return;
+        }
+
         $migrate
-            ->drop()
             ->install()
             ->run();
 

@@ -8,13 +8,13 @@
 
 namespace Roquie\Database\Console;
 
-use Roquie\Database\Migrations\Migrate;
+use Roquie\Database\Migration\Migrate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Roquie\Database\Migrations\Creator\MigrationCreatorInterface as M;
+use Roquie\Database\Migration\Creator\MigrationCreatorInterface as M;
 
 class MigrateStatusCommand extends Command
 {
@@ -76,7 +76,7 @@ class MigrateStatusCommand extends Command
     }
 
     /**
-     * @param \Roquie\Database\Migrations\Migrate $migrate
+     * @param \Roquie\Database\Migration\Migrate $migrate
      * @param array $files
      * @param array $ran
      * @param array $batches

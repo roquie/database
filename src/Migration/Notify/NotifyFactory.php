@@ -6,7 +6,7 @@
  * Date: 2018-12-01
  */
 
-namespace Roquie\Database\Migrations\Notify;
+namespace Roquie\Database\Migration\Notify;
 
 use InvalidArgumentException;
 use Monolog\Handler\ErrorLogHandler;

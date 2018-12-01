@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Roquie\Database\Migrations\Creator;
+namespace Roquie\Database\Migration\Creator;
 
 use InvalidArgumentException;
-use Roquie\Database\Migrations\Notify\NotifyInterface;
+use Roquie\Database\Migration\Notify\NotifyInterface;
 
 class CreatorFactory
 {
     /**
      * @param string $type
-     * @param \Roquie\Database\Migrations\Notify\NotifyInterface $notify
-     * @return \Roquie\Database\Migrations\Creator\MigrationCreator
+     * @param \Roquie\Database\Migration\Notify\NotifyInterface $notify
+     * @return \Roquie\Database\Migration\Creator\MigrationCreator
      */
     public static function create(string $type, NotifyInterface $notify): MigrationCreatorInterface
     {

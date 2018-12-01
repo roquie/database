@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migrations\Notify;
+namespace Roquie\Database\Migration\Notify;
 
 class NotifyBlackhole implements NotifyInterface
 {
