@@ -1,0 +1,4 @@
+-- migration: {name}
+
+ALTER TABLE {table}
+

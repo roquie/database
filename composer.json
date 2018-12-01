@@ -1,0 +1,35 @@
+{
+  "name": "roquie/database",
+  "description": "Simple PHP migrate utility.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "roquie",
+      "email": "roquie0@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "symfony/console": "^4.1",
+    "league/flysystem": "^1.0",
+    "psr/log": "^1.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4",
+    "symfony/var-dumper": "^4.1",
+    "monolog/monolog": "^1.24"
+  },
+  "autoload": {
+    "psr-4": {
+      "Roquie\\Database\\": "src"
+    }
+  },
+  "suggest": {
+    "ext-pdo": "For usage with SQL databases.",
+    "monolog/monolog": "For usage when the app starts (if u have a native server, like Swoole)."
+  },
+  "bin": [
+    "bin/rdb"
+  ]
+}

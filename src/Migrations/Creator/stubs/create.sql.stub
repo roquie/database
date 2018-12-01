@@ -1,0 +1,6 @@
+-- migration: {name}
+
+CREATE TABLE {table} (
+  id SERIAL PRIMARY KEY,
+
+);
