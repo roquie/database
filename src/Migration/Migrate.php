@@ -7,7 +7,7 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use Roquie\Database\Notify\NotifyFactory;
 use Roquie\Database\Notify\NotifyInterface;
-use Roquie\Database\Migration\Repository\DatabaseFactory;
+use Roquie\Database\DatabaseFactory;
 use Roquie\Database\Migration\Repository\MigrationRepositoryFactory;
 use Roquie\Database\Migration\Repository\MigrationRepositoryInterface;
 

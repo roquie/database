@@ -8,7 +8,7 @@ use League\Flysystem\FilesystemInterface;
 use Psr\Container\ContainerInterface;
 use Roquie\Database\Notify\NotifyFactory;
 use Roquie\Database\Notify\NotifyInterface;
-use Roquie\Database\Migration\Repository\DatabaseFactory;
+use Roquie\Database\DatabaseFactory;
 use Roquie\Database\Migration\Whois;
 
 class Seed

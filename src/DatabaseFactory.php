@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Roquie\Database\Migration\Repository;
+namespace Roquie\Database;
 
 use InvalidArgumentException;
 use PDO;
