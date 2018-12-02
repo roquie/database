@@ -112,11 +112,14 @@ final class Wait
     public function start(string $dsn, callable $callback)
     {
         $completed = 0;
-        while ($completed <= $this->attempt) {
+        while ($completed < $this->attempt) {
             try {
                 $database = $this->connection->alive($dsn);
             } catch (NotConnectedException $e) {
-                $this->logger->warn(sprintf('%s, attempt no. %d', $e->getMessage(), $completed + 1));
+                $this->logger->warn(sprintf('%s Attempt no. %d', $e->getMessage(), $completed + 1));
+                sleep($this->every);
+                $completed++;
+
                 continue;
             }
 
@@ -127,7 +130,6 @@ final class Wait
             }
 
             $completed++;
-            sleep($this->every);
         }
     }
 
