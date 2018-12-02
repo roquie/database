@@ -10,7 +10,8 @@ use Roquie\Database\Connection\Exception\NotConnectedException;
 final class Wait
 {
     private const CHANNEL = 'WaitDB';
-    protected const DEFAULT_ATTEMPTS = 10;
+    private const DEFAULT_ATTEMPTS = 10;
+    private const DEFAULT_EVERY_SECOND = 3;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -26,6 +27,11 @@ final class Wait
      * @var integer
      */
     private $attempt = self::DEFAULT_ATTEMPTS;
+
+    /**
+     * @var integer
+     */
+    private $every = self::DEFAULT_EVERY_SECOND;
 
     /**
      * Wait constructor.
@@ -56,6 +62,17 @@ final class Wait
     public function attempts(int $count)
     {
         $this->attempt = $count;
+
+        return $this;
+    }
+
+    /**
+     * @param int $second
+     * @return \Roquie\Database\Connection\Wait\Wait
+     */
+    public function every(int $second)
+    {
+        $this->every = $second;
 
         return $this;
     }
@@ -110,6 +127,7 @@ final class Wait
             }
 
             $completed++;
+            sleep($this->every);
         }
     }
 
