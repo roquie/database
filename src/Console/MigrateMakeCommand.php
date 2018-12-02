@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by Roquie.
- * E-mail: roquie0@gmail.com
- * GitHub: Roquie
- * Date: 23/11/2018
- */
+<?php declare(strict_types=1);
 
 namespace Roquie\Database\Console;
 

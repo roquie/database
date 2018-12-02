@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by Roquie.
- * E-mail: roquie0@gmail.com
- * GitHub: Roquie
- * Date: 2018-12-01
- */
+<?php declare(strict_types=1);
 
 namespace Roquie\Database\Notify;
 

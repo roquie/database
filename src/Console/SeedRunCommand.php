@@ -3,7 +3,6 @@
 namespace Roquie\Database\Console;
 
 use Psr\Container\ContainerInterface;
-use Roquie\Database\Migration\Migrate;
 use Roquie\Database\Seed\Seed;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

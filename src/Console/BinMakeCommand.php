@@ -2,16 +2,11 @@
 
 namespace Roquie\Database\Console;
 
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
-use Psr\Container\ContainerInterface;
 use Roquie\Database\Migration\Whois;
 use Roquie\Database\Notify\NotifyConsole;
-use Roquie\Database\Seed\Seed;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-//use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BinMakeCommand extends Command
