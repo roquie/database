@@ -2,7 +2,7 @@
 
 namespace Roquie\Database\Migration\Creator;
 
-use InvalidArgumentException;
+use Roquie\Database\Migration\Exception\InvalidArgumentException;
 use Roquie\Database\Notify\NotifyInterface;
 
 class CreatorFactory
@@ -11,6 +11,7 @@ class CreatorFactory
      * @param string $type
      * @param \Roquie\Database\Notify\NotifyInterface $notify
      * @return \Roquie\Database\Migration\Creator\MigrationCreator
+     * @throws \Roquie\Database\Migration\Exception\InvalidArgumentException
      */
     public static function create(string $type, NotifyInterface $notify): MigrationCreatorInterface
     {
@@ -22,7 +23,7 @@ class CreatorFactory
             case 'default':
                 return new MigrationCreator($notify);
             default:
-                throw new InvalidArgumentException('Database type not supported.');
+                throw InvalidArgumentException::forDatabaseTypeNotSupported($type);
         }
     }
 }

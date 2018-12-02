@@ -2,8 +2,8 @@
 
 namespace Roquie\Database\Migration\Repository;
 
-use InvalidArgumentException;
 use PDO;
+use Roquie\Database\Migration\Exception\InvalidArgumentException;
 use Roquie\Database\Migration\Repository\MigrationRepositoryInterface as MR;
 
 class MigrationRepositoryFactory
@@ -12,6 +12,7 @@ class MigrationRepositoryFactory
      * @param object $database
      * @param string $table
      * @return \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
+     * @throws \Roquie\Database\Migration\Exception\InvalidArgumentException
      */
     public static function create($database, string $table = MR::DEFAULT_TABLE): MR
     {
@@ -19,7 +20,7 @@ class MigrationRepositoryFactory
             case $database instanceof PDO:
                 return new SqlMigrationRepository($database, $table);
             default:
-                throw new InvalidArgumentException('Database object not supported.');
+                throw InvalidArgumentException::forDatabaseObjectNotSupported();
         }
     }
 }

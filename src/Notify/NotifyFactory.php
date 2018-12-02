@@ -2,10 +2,10 @@
 
 namespace Roquie\Database\Notify;
 
-use InvalidArgumentException;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Roquie\Database\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Output\Output;
 
 class NotifyFactory
@@ -15,6 +15,7 @@ class NotifyFactory
      *
      * @param $notify
      * @return NotifyConsole|NotifyLogger|NotifyStdout|NotifyBlackhole
+     * @throws \Roquie\Database\Exception\InvalidArgumentException
      */
     public static function create($notify)
     {
@@ -30,7 +31,7 @@ class NotifyFactory
             case $notify instanceof LoggerInterface:
                 return new NotifyLogger($notify);
             default:
-                throw new InvalidArgumentException('Notifier not supported.');
+                throw InvalidArgumentException::forNotSupportedNotifier();
         }
     }
 

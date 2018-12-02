@@ -2,14 +2,15 @@
 
 namespace Roquie\Database;
 
-use InvalidArgumentException;
 use PDO;
+use Roquie\Database\Exception\InvalidArgumentException;
 
 class DatabaseFactory
 {
     /**
      * @param string $dns
      * @return \PDO|mixed
+     * @throws \Roquie\Database\Exception\InvalidArgumentException
      */
     public static function create(string $dns)
     {
@@ -20,7 +21,7 @@ class DatabaseFactory
             case 'sqlite':
                 return self::defaultPdoInstance($dns);
             default:
-                throw new InvalidArgumentException('Database dsn not supported.');
+                throw InvalidArgumentException::forDnsNotSupported($dns);
         }
     }
 

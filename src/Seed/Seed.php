@@ -52,7 +52,7 @@ class Seed
         $notify = NotifyInterface::LOGGER
     )
     {
-        $this->database = DatabaseFactory::create($database);
+        $this->database = $this->database($database);
         $this->container = $container;
         $this->filesystem = $filesystem;
         $this->notify = NotifyFactory::create($notify);
@@ -150,5 +150,23 @@ class Seed
     public function getContainer(): ?ContainerInterface
     {
         return $this->container;
+    }
+
+    /**
+     * Resolve database connection.
+     * If passed object with active connection
+     * his it will be used by default.
+     * Else, will be parsed dns string and create new connection.
+     *
+     * @param $database
+     * @return mixed|\PDO
+     */
+    private function database($database)
+    {
+        if (is_object($database)) {
+            return $database;
+        }
+
+        return DatabaseFactory::create($database);
     }
 }

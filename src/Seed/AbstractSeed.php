@@ -2,8 +2,8 @@
 
 namespace Roquie\Database\Seed;
 
-use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
+use Roquie\Database\Seed\Exception\InvalidArgumentException;
 
 abstract class AbstractSeed
 {
@@ -91,17 +91,23 @@ abstract class AbstractSeed
      *
      * @param $class
      * @return void
+     * @throws \Roquie\Database\Seed\Exception\InvalidArgumentException
      */
     protected function call(string $class): void
     {
+        if (is_null($this->getContainer())) {
+            (new $class())->run();
+            return;
+        }
+
         if (! $this->getContainer()->has($class)) {
-            throw new InvalidArgumentException('Seeder not registered in the container.');
+            throw InvalidArgumentException::forNotRegisteredSeeder();
         }
 
         $instance = $this->getContainer()->get($class);
 
         if (! $instance instanceof AbstractSeed) {
-            throw new InvalidArgumentException('Seeder class must be extended from AbstractSeed.');
+            throw InvalidArgumentException::forExtendRule();
         }
 
         $instance->run();

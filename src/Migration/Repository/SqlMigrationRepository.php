@@ -2,8 +2,8 @@
 
 namespace Roquie\Database\Migration\Repository;
 
-use InvalidArgumentException;
 use PDO;
+use Roquie\Database\Migration\Exception\InvalidArgumentException;
 
 class SqlMigrationRepository implements MigrationRepositoryInterface
 {
@@ -201,7 +201,7 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
                 $sql = "select count(*) from sqlite_master where type = 'table' and name = ?";
                 break;
             default:
-                throw new InvalidArgumentException('Database not supported.');
+                throw InvalidArgumentException::forDatabaseNotSupported();
         }
 
         $stmt = $this->pdo->prepare($sql);
@@ -249,6 +249,7 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
 
     /**
      * @return array
+     * @throws \Roquie\Database\Migration\Exception\InvalidArgumentException
      */
     private function getTables(): array
     {
@@ -266,7 +267,7 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
                 $sql = "select name from sqlite_master where type = 'table'";
                 break;
             default:
-                throw new InvalidArgumentException('Database not supported.');
+                throw InvalidArgumentException::forDatabaseNotSupported();
         }
 
         return $this->pdo
@@ -276,6 +277,7 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
 
     /**
      * @return array
+     * @throws \Roquie\Database\Migration\Exception\InvalidArgumentException
      */
     private function getViews(): array
     {
@@ -296,7 +298,7 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
                 $sql = "select name from sqlite_master where type = 'view'";
                 break;
             default:
-                throw new InvalidArgumentException('Database not supported.');
+                throw InvalidArgumentException::forDatabaseNotSupported();
         }
 
         return $this->pdo
