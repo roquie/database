@@ -137,6 +137,14 @@ class Migrate
     }
 
     /**
+     * Close database connection after all operations.
+     */
+    public function close(): void
+    {
+        $this->getMigrationRepository()->close();
+    }
+
+    /**
      * @return \Roquie\Database\Notify\NotifyInterface
      */
     public function getNotify(): NotifyInterface

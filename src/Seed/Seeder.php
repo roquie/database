@@ -74,7 +74,16 @@ final class Seeder
      */
     public function seed(?string $name = null): void
     {
-        foreach ($this->all($name) as $file => $content) {
+        $this->notify->note('');
+
+        $files = $this->all($name);
+
+        if (count($files) < 1) {
+            $this->notify->note("<info>Seed files not found.</info>");
+            return;
+        }
+
+        foreach ($files as [$file, $content]) {
             $this->load($content);
             $this->resolve($file['filename'])->run();
 
@@ -132,21 +141,24 @@ final class Seeder
      * Find all seed's in the default Flysystem path.
      *
      * @param string|null $name
-     * @return iterable
+     * @return array
      * @throws \League\Flysystem\FileNotFoundException
      */
-    private function all(?string $name): iterable
+    private function all(?string $name): array
     {
+        $array = [];
         foreach ($this->filesystem->listContents() as $file) {
             if (is_null($name)) {
                 if ($file['filename'] === ($name ?: Seed::DEFAULT_SEED)) {
-                    yield $file => $this->filesystem->read($file['path']);
+                    $array[] = [$file, $this->filesystem->read($file['path'])];
                     break;
                 }
             } else {
-                yield $file => $this->filesystem->read($file['path']);
+                $array[] = [$file, $this->filesystem->read($file['path'])];
             }
         }
+
+        return $array;
     }
 
     /**

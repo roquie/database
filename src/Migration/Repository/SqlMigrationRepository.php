@@ -303,4 +303,14 @@ class SqlMigrationRepository implements MigrationRepositoryInterface
             ->query($sql)
             ->fetchAll(PDO::FETCH_COLUMN);
     }
+
+    /**
+     * Close database connection.
+     *
+     * @return void
+     */
+    public function close(): void
+    {
+        $this->pdo = null;
+    }
 }

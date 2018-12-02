@@ -6,6 +6,7 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use Psr\Container\ContainerInterface;
+use Roquie\Database\Connection\Closer;
 use Roquie\Database\Notify\NotifyFactory;
 use Roquie\Database\Notify\NotifyInterface;
 use Roquie\Database\DatabaseFactory;
@@ -72,17 +73,27 @@ class Seed
 
     /**
      * @param string|null $name
-     * @return void
+     * @return Seed
      * @throws \Invoker\Exception\InvocationException
      * @throws \Invoker\Exception\NotCallableException
      * @throws \Invoker\Exception\NotEnoughParametersException
      * @throws \League\Flysystem\FileNotFoundException
      */
-    public function run(?string $name = null): void
+    public function run(?string $name = null): Seed
     {
         Whois::print($this->getNotify());
 
         $this->getSeeder()->seed($name);
+
+        return $this;
+    }
+
+    /**
+     * Close database connection after all operations.
+     */
+    public function close(): void
+    {
+        Closer::database($this->getDatabase())->close();
     }
 
     /**

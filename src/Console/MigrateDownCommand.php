@@ -38,6 +38,8 @@ class MigrateDownCommand extends Command
         ];
 
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
-        $migrate->rollback($options);
+        $migrate
+            ->rollback($options)
+            ->close();
     }
 }

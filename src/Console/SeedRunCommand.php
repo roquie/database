@@ -62,9 +62,11 @@ class SeedRunCommand extends Command
             $seed->setContainer($this->container);
         }
 
-        $seed->run($input->getArgument('name'));
+        $seed
+            ->run($input->getArgument('name'))
+            ->close();
 
         $output->writeln('');
-        $output->writeln('<info>Seed completed</info>');
+        $output->writeln('<comment>Seed completed</comment>');
     }
 }

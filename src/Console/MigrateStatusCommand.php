@@ -54,6 +54,7 @@ class MigrateStatusCommand extends Command
         $table->setRows($this->table($migrate, $files, $ran, $batches));
 
         $table->render();
+        $migrate->close();
     }
 
     /**

@@ -28,7 +28,7 @@ final class Console
         $app->add(new MigrateResetCommand());
         $app->add(new MigrateStatusCommand());
         $app->add(new MigrateRefreshCommand());
-        $app->add(new MigrateFreshCommand());
+        $app->add(new MigrateFreshCommand($container));
         $app->add(new MigrateDropCommand());
         $app->add(new SeedRunCommand($container));
         $app->add(new SeedMakeCommand());

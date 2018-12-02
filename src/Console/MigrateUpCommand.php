@@ -68,17 +68,28 @@ class MigrateUpCommand extends Command
 
         $migrate
             ->install()
-            ->run($options);
+            ->run($options)
+            ->close();
 
-        if (! $input->hasOption('seed')) {
-            return;
+        if ($input->hasOption('seed')) {
+            $this->getSeed($input, $output)
+                 ->run($input->getOption('seed'))
+                 ->close();
         }
+    }
 
-        $seed = Seed::new($input->getOption('dns'), Seed::DEFAULT_PATH, $output);
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return \Roquie\Database\Seed\Seed
+     */
+    private function getSeed(InputInterface $input, OutputInterface $output): Seed
+    {
+        $seed = Seed::new($input->getOption('dsn'), Seed::DEFAULT_PATH, $output);
         if ($this->container instanceof ContainerInterface) {
             $seed->setContainer($this->container);
         }
 
-        $seed->run($input->getOption('seed'));
+        return $seed;
     }
 }

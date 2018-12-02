@@ -35,7 +35,7 @@ class MigrateRefreshCommand extends Command
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
 
         if (! $migrate->exists()) {
-            $output->writeln('<comment>Migration table not found.</comment>');
+            $output->writeln('<info>Migration table not found.</info>');
             return;
         }
 
@@ -43,9 +43,11 @@ class MigrateRefreshCommand extends Command
 
         $step > 0 ? $migrate->rollback(compact('step')) : $migrate->reset();
 
-        $migrate->run();
+        $migrate
+            ->run()
+            ->close();
 
         $output->writeln('');
-        $output->writeln('<info>Done</info>');
+        $output->writeln('<comment>Done</comment>');
     }
 }

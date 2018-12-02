@@ -2,7 +2,9 @@
 
 namespace Roquie\Database\Migration\Repository;
 
-interface MigrationRepositoryInterface
+use Roquie\Database\Connection\CloseConnectionInterface;
+
+interface MigrationRepositoryInterface extends CloseConnectionInterface
 {
     public const DEFAULT_TABLE = 'migrations';
 

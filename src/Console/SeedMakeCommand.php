@@ -40,6 +40,6 @@ class SeedMakeCommand extends Command
         exec('composer dump-autoload');
 
         $output->writeln('');
-        $output->writeln('<info>Ok</info>');
+        $output->writeln('<comment>Ok</comment>');
     }
 }

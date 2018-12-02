@@ -32,9 +32,11 @@ class MigrateDropCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
-        $migrate->drop();
+        $migrate
+            ->drop()
+            ->close();
 
         $output->writeln('');
-        $output->writeln('<info>Database cleaned</info>');
+        $output->writeln('<comment>Database cleaned</comment>');
     }
 }

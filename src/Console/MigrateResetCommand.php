@@ -34,10 +34,12 @@ class MigrateResetCommand extends Command
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
 
         if (! $migrate->exists()) {
-            $output->writeln('<comment>Migration table not found.</comment>');
+            $output->writeln('<info>Migration table not found.</info>');
             return;
         }
 
-        $migrate->reset();
+        $migrate
+            ->reset()
+            ->close();
     }
 }
