@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "description": "",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "roquie",
+      "email": "roquie0@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "roquie/database": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/roquie/database"
+    }
+  ]
+}

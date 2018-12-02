@@ -2,7 +2,7 @@
 
 namespace Roquie\Database\Migration\Repository;
 
-use Roquie\Database\Connection\CloseConnectionInterface;
+use Roquie\Database\Connection\Close\CloseConnectionInterface;
 
 interface MigrationRepositoryInterface extends CloseConnectionInterface
 {

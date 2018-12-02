@@ -6,7 +6,7 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use Psr\Container\ContainerInterface;
-use Roquie\Database\Connection\Closer;
+use Roquie\Database\Connection\Close\Closer;
 use Roquie\Database\Notify\NotifyFactory;
 use Roquie\Database\Notify\NotifyInterface;
 use Roquie\Database\DatabaseFactory;

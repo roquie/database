@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Roquie\Database\Connection;
+namespace Roquie\Database\Connection\Close;
 
 use PDO;
 

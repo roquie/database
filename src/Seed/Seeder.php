@@ -9,6 +9,7 @@ use Invoker\ParameterResolver\ResolverChain;
 use League\Flysystem\FilesystemInterface;
 use Psr\Container\ContainerInterface;
 use Roquie\Database\Notify\NotifyInterface;
+use Roquie\Database\Seed\Exception\InvalidArgumentException;
 
 final class Seeder
 {
@@ -92,6 +93,31 @@ final class Seeder
     }
 
     /**
+     * Call seeder once.
+     *
+     * @param string $class
+     * @return void
+     * @throws \Invoker\Exception\InvocationException
+     * @throws \Invoker\Exception\NotCallableException
+     * @throws \Invoker\Exception\NotEnoughParametersException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \Roquie\Database\Seed\Exception\InvalidArgumentException
+     */
+    public function call(string $class): void
+    {
+        $files = $this->all($class);
+
+        if (count($files) < 1) {
+            throw InvalidArgumentException::forNotFoundSeeder();
+        }
+
+        foreach ($files as [$file, $content]) {
+            $this->load($content);
+            $this->resolve($file['filename'])->run();
+        }
+    }
+
+    /**
      * Resolve loaded Seed class.
      *
      * @param string $class
@@ -105,6 +131,7 @@ final class Seeder
         /** @var $instance \Roquie\Database\Seed\AbstractSeed */
         $instance = $this->autowire($class);
         $instance->setDatabase($this->database);
+        $instance->setSeeder($this);
 
         if (! is_null($this->container)) {
             $instance->setContainer($this->container);
@@ -149,12 +176,12 @@ final class Seeder
         $array = [];
         foreach ($this->filesystem->listContents() as $file) {
             if (is_null($name)) {
+                $array[] = [$file, $this->filesystem->read($file['path'])];
+            } else {
                 if ($file['filename'] === ($name ?: Seed::DEFAULT_SEED)) {
                     $array[] = [$file, $this->filesystem->read($file['path'])];
                     break;
                 }
-            } else {
-                $array[] = [$file, $this->filesystem->read($file['path'])];
             }
         }
 

@@ -15,4 +15,9 @@ class InvalidArgumentException extends SeedException
     {
         return new self('Seeder class must be extended from AbstractSeed.');
     }
+
+    public static function forNotFoundSeeder()
+    {
+        return new self('Seeder class not found.');
+    }
 }

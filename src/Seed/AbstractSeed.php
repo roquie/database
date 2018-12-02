@@ -3,14 +3,13 @@
 namespace Roquie\Database\Seed;
 
 use Psr\Container\ContainerInterface;
-use Roquie\Database\Seed\Exception\InvalidArgumentException;
 
 abstract class AbstractSeed
 {
     /**
      * PSR-compatible DI container for autowiring constructor dependencies.
      *
-     * @var \Psr\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface|null
      */
     protected $container;
 
@@ -23,6 +22,11 @@ abstract class AbstractSeed
     protected $database;
 
     /**
+     * @var Seeder
+     */
+    protected $seeder;
+
+    /**
      * Run database seeds here.
      */
     abstract public function run(): void;
@@ -31,13 +35,11 @@ abstract class AbstractSeed
      * PSR-compatible DI container for autowiring constructor dependencies.
      *
      * @param \Psr\Container\ContainerInterface $container
-     * @return AbstractSeed
+     * @return void
      */
-    public function setContainer(ContainerInterface $container): AbstractSeed
+    public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
-
-        return $this;
     }
 
     /**
@@ -45,21 +47,28 @@ abstract class AbstractSeed
      * If u use relational databases this is PDO instance.
      *
      * @param mixed|\PDO $database
-     * @return AbstractSeed
+     * @return void
      */
-    public function setDatabase($database)
+    public function setDatabase($database): void
     {
         $this->database = $database;
+    }
 
-        return $this;
+    /**
+     * @param Seeder $seeder
+     * @return void
+     */
+    public function setSeeder(Seeder $seeder): void
+    {
+        $this->seeder = $seeder;
     }
 
     /**
      * PSR-compatible DI container for autowiring constructor dependencies.
      *
-     * @return \Psr\Container\ContainerInterface
+     * @return \Psr\Container\ContainerInterface|null
      */
-    public function getContainer(): ContainerInterface
+    public function getContainer(): ?ContainerInterface
     {
         return $this->container;
     }
@@ -89,27 +98,16 @@ abstract class AbstractSeed
     /**
      * Call seeder.
      *
-     * @param $class
+     * @param string $class
      * @return void
+     * @throws \Invoker\Exception\InvocationException
+     * @throws \Invoker\Exception\NotCallableException
+     * @throws \Invoker\Exception\NotEnoughParametersException
+     * @throws \League\Flysystem\FileNotFoundException
      * @throws \Roquie\Database\Seed\Exception\InvalidArgumentException
      */
     protected function call(string $class): void
     {
-        if (is_null($this->getContainer())) {
-            (new $class())->run();
-            return;
-        }
-
-        if (! $this->getContainer()->has($class)) {
-            throw InvalidArgumentException::forNotRegisteredSeeder();
-        }
-
-        $instance = $this->getContainer()->get($class);
-
-        if (! $instance instanceof AbstractSeed) {
-            throw InvalidArgumentException::forExtendRule();
-        }
-
-        $instance->run();
+        $this->seeder->call($class);
     }
 }
