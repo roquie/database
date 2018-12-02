@@ -1,6 +1,6 @@
 {
   "name": "roquie/database",
-  "description": "Simple PHP migrate utility.",
+  "description": "Great tool for working with database migrations and seeds.",
   "type": "library",
   "license": "MIT",
   "authors": [
