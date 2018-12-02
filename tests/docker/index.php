@@ -6,7 +6,7 @@ use Roquie\Database\Seed\Seed;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$dsn = 'pgsql:dbname=postgres;host=localhost;user=postgres;password=postgres';
+$dsn = 'pgsql:dbname=postgres;host=db;user=postgres;password=postgres';
 
 Wait::connection($dsn, 5, function (PDO $pdo) {
     Migrate::new($pdo)
