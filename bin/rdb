@@ -1,18 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Roquie\Database\Console\MigrateDownCommand;
-use Roquie\Database\Console\MigrateDropCommand;
-use Roquie\Database\Console\MigrateFreshCommand;
-use Roquie\Database\Console\MigrateMakeCommand;
-use Roquie\Database\Console\MigrateRefreshCommand;
-use Roquie\Database\Console\MigrateResetCommand;
-use Roquie\Database\Console\MigrateStatusCommand;
-use Roquie\Database\Console\MigrateUpCommand;
-use Roquie\Database\Migration\Whois;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Roquie\Database\Console\Console;
 
 ini_set('date.timezone', 'UTC');
 
@@ -29,21 +18,4 @@ foreach ($locations as $file) {
     }
 }
 
-$output = new ConsoleOutput();
-$output->getFormatter()->setStyle('cyan', new OutputFormatterStyle('cyan'));
-$output->writeln(Whois::WHOIS);
-if (isset($argv[1]) && in_array($argv[1], ['list', 'help'], true) || empty($argv[1])) {
-    $output->writeln('');
-}
-
-$app = new Application('');
-$app->add(new MigrateMakeCommand());
-$app->add(new MigrateUpCommand());
-$app->add(new MigrateDownCommand());
-$app->add(new MigrateResetCommand());
-$app->add(new MigrateStatusCommand());
-$app->add(new MigrateRefreshCommand());
-$app->add(new MigrateFreshCommand());
-$app->add(new MigrateDropCommand());
-
-$app->run(null, $output);
+Console::main($argv);

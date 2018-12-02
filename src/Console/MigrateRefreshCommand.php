@@ -21,7 +21,7 @@ class MigrateRefreshCommand extends Command
         $this
             ->setName('migrate:refresh')
             ->setDescription('Reset and re-run all migrations')
-            ->setHelp('Example of usage: rdb migrate:refresh --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:refresh --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')

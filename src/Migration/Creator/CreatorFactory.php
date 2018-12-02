@@ -3,13 +3,13 @@
 namespace Roquie\Database\Migration\Creator;
 
 use InvalidArgumentException;
-use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Notify\NotifyInterface;
 
 class CreatorFactory
 {
     /**
      * @param string $type
-     * @param \Roquie\Database\Migration\Notify\NotifyInterface $notify
+     * @param \Roquie\Database\Notify\NotifyInterface $notify
      * @return \Roquie\Database\Migration\Creator\MigrationCreator
      */
     public static function create(string $type, NotifyInterface $notify): MigrationCreatorInterface

@@ -23,7 +23,7 @@ class MigrateStatusCommand extends Command
         $this
             ->setName('migrate:status')
             ->setDescription('Show the status of each migration')
-            ->setHelp('Example of usage: rdb migrate:status --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:status --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')

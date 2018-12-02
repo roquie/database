@@ -22,7 +22,7 @@ class MigrateFreshCommand extends Command
         $this
             ->setName('migrate:fresh')
             ->setDescription('Drop all tables and re-run all migrations')
-            ->setHelp('Example of usage: rdb migrate:fresh --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:fresh --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')

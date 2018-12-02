@@ -6,21 +6,24 @@ use Psr\Container\ContainerInterface;
 use Roquie\Database\Migration\Migrate;
 use Roquie\Database\Seed\Seed;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrateUpCommand extends Command
+class SeedRunCommand extends Command
 {
     /**
+     * Application container if needed.
+     *
      * @var \Psr\Container\ContainerInterface
      */
     private $container;
 
     /**
-     * MigrateUpCommand constructor.
+     * SeedRunCommand constructor.
      *
-     * @param \Psr\Container\ContainerInterface $container
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container = null)
     {
@@ -31,16 +34,14 @@ class MigrateUpCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('migrate:up')
-            ->setDescription('Run the database migrations')
-            ->setHelp('Example of usage: rdb migrate:up --dsn pgsql:dbname=test;host=localhost;user=root');
+            ->setName('seed:run')
+            ->setDescription('Seed the database with records')
+            ->setHelp('Example of usage: rdb seed:run --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
+            ->addArgument('name', InputArgument::OPTIONAL, 'The class name of the root seeder')
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')
-            ->addOption('drop', null, InputOption::VALUE_NONE, 'Drop database before run the database migrations.')
-            ->addOption('step', null, InputOption::VALUE_OPTIONAL, 'Force the migrations to be run so they can be rolled back individually.')
-            ->addOption('seed', null, InputOption::VALUE_OPTIONAL, 'Indicates if the seed task should be re-run.')
-            ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to use.', Migrate::DEFAULT_PATH);
+            ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The path to the seeds files to use', Seed::DEFAULT_PATH);
     }
 
     /**
@@ -56,29 +57,15 @@ class MigrateUpCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $options = [
-            'step' => $input->getOption('step')
-        ];
+        $seed = Seed::new($input->getOption('dsn'), $input->getOption('path'), $output);
 
-        $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
-
-        if ($input->hasOption('drop')) {
-            $migrate->drop();
-        }
-
-        $migrate
-            ->install()
-            ->run($options);
-
-        if (! $input->hasOption('seed')) {
-            return;
-        }
-
-        $seed = Seed::new($input->getOption('dns'), Seed::DEFAULT_PATH, $output);
         if ($this->container instanceof ContainerInterface) {
             $seed->setContainer($this->container);
         }
 
-        $seed->run($input->getOption('seed'));
+        $seed->run($input->getArgument('name'));
+
+        $output->writeln('');
+        $output->writeln('<info>Seed completed</info>');
     }
 }

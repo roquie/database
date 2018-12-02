@@ -6,7 +6,7 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use Roquie\Database\Migration\Creator\MigrationCreatorInterface as M;
-use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Notify\NotifyInterface;
 
 class MigrationCreator implements MigrationCreatorInterface
 {
@@ -16,14 +16,14 @@ class MigrationCreator implements MigrationCreatorInterface
     private $stubs;
 
     /**
-     * @var \Roquie\Database\Migration\Notify\NotifyInterface
+     * @var \Roquie\Database\Notify\NotifyInterface
      */
     private $notify;
 
     /**
      * MigrationCreator constructor.
      *
-     * @param \Roquie\Database\Migration\Notify\NotifyInterface $notify
+     * @param \Roquie\Database\Notify\NotifyInterface $notify
      */
     public function __construct(NotifyInterface $notify)
     {
@@ -49,7 +49,7 @@ class MigrationCreator implements MigrationCreatorInterface
                 $this->populateStub($filename, $stub, $table)
             );
 
-            $this->notify->note("<comment>Stub</comment> {$filename} <comment>created</comment>");
+            $this->notify->note("<comment>Migration</comment> {$filename} <comment>created</comment>");
         }
     }
 

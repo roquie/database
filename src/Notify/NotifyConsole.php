@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migration\Notify;
+namespace Roquie\Database\Notify;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\Output;
@@ -20,6 +20,9 @@ class NotifyConsole implements NotifyInterface
     public function __construct(Output $output)
     {
         $this->output = $output;
+        $this->output
+            ->getFormatter()
+            ->setStyle('cyan', new OutputFormatterStyle('cyan'));
     }
 
     /**

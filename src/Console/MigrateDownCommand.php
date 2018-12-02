@@ -22,7 +22,7 @@ class MigrateDownCommand extends Command
             ->setName('migrate:down')
             ->setAliases(['migrate:rollback'])
             ->setDescription('Rollback the last database migration')
-            ->setHelp('Example of usage: rdb migrate:down --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:down --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')

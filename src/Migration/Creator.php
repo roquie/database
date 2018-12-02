@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by Roquie.
- * E-mail: roquie0@gmail.com
- * GitHub: Roquie
- * Date: 2018-12-01
- */
+<?php declare(strict_types=1);
 
 namespace Roquie\Database\Migration;
 
@@ -13,34 +7,38 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use Roquie\Database\Migration\Creator\CreatorFactory;
 use Roquie\Database\Migration\Creator\MigrationCreatorInterface;
-use Roquie\Database\Migration\Notify\NotifyFactory;
-use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Notify\NotifyFactory;
+use Roquie\Database\Notify\NotifyInterface;
 
 class Creator
 {
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var FilesystemInterface
      */
     private $filesystem;
 
     /**
-     * @var \Roquie\Database\Migration\Creator\MigrationCreatorInterface
+     * @var MigrationCreatorInterface
      */
     private $creator;
 
     /**
-     * @var \Roquie\Database\Migration\Notify\NotifyInterface|string
+     * @var \Roquie\Database\Notify\NotifyInterface|string
      */
     private $notify;
 
     /**
      * Creator constructor.
      *
-     * @param \Roquie\Database\Migration\Creator\MigrationCreatorInterface $creator
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Roquie\Database\Migration\Notify\NotifyInterface|string $notify
+     * @param MigrationCreatorInterface $creator
+     * @param FilesystemInterface $filesystem
+     * @param \Roquie\Database\Notify\NotifyInterface|string $notify
      */
-    public function __construct(MigrationCreatorInterface $creator, FilesystemInterface $filesystem, $notify = 'logger')
+    public function __construct(
+        MigrationCreatorInterface $creator,
+        FilesystemInterface $filesystem,
+        $notify = NotifyInterface::LOGGER
+    )
     {
         $note = $notify instanceof NotifyInterface
             ? $notify
@@ -56,10 +54,14 @@ class Creator
      *
      * @param string $type
      * @param string $path
-     * @param \Roquie\Database\Migration\Notify\NotifyInterface|string $notify
+     * @param \Roquie\Database\Notify\NotifyInterface|string $notify
      * @return \Roquie\Database\Migration\Creator
      */
-    public static function new(string $type = 'default', string $path = Migrate::DEFAULT_PATH, $notify = 'logger'): Creator
+    public static function new(
+        string $type = 'default',
+        string $path = Migrate::DEFAULT_PATH,
+        $notify = NotifyInterface::LOGGER
+    ): Creator
     {
         $fs = new Filesystem(new Local($path));
         $note = NotifyFactory::create($notify);
@@ -77,6 +79,32 @@ class Creator
      */
     public function create(string $name, ?string $table = null, bool $create = false): void
     {
+        Whois::print($this->getNotify());
+
         $this->creator->create($this->filesystem, ...func_get_args());
+    }
+
+    /**
+     * @return \Roquie\Database\Notify\NotifyInterface|string
+     */
+    public function getNotify()
+    {
+        return $this->notify;
+    }
+
+    /**
+     * @return MigrationCreatorInterface
+     */
+    public function getCreator(): MigrationCreatorInterface
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @return FilesystemInterface
+     */
+    public function getFilesystem(): FilesystemInterface
+    {
+        return $this->filesystem;
     }
 }

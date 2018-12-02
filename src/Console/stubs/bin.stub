@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+use Roquie\Database\Console\Console;
+
+ini_set('date.timezone', 'UTC');
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+// $container must be passed as second argument
+Console::main($argv);

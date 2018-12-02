@@ -1,6 +1,6 @@
 <?php
 
-namespace Roquie\Database\Migration\Notify;
+namespace Roquie\Database\Notify;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;

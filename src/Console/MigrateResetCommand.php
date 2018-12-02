@@ -21,7 +21,7 @@ class MigrateResetCommand extends Command
         $this
             ->setName('migrate:reset')
             ->setDescription('Rollback all database migrations')
-            ->setHelp('Example of usage: rdb migrate:reset --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:reset --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')

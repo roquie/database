@@ -11,8 +11,8 @@ namespace Roquie\Database\Migration;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Roquie\Database\Migration\Notify\NotifyFactory;
-use Roquie\Database\Migration\Notify\NotifyInterface;
+use Roquie\Database\Notify\NotifyFactory;
+use Roquie\Database\Notify\NotifyInterface;
 use Roquie\Database\Migration\Repository\DatabaseFactory;
 use Roquie\Database\Migration\Repository\MigrationRepositoryFactory;
 use Roquie\Database\Migration\Repository\MigrationRepositoryInterface;
@@ -33,7 +33,7 @@ class Migrate
     private $migrationRepository;
 
     /**
-     * @var Notify\NotifyInterface
+     * @var \Roquie\Database\Notify\NotifyInterface
      */
     private $notify;
 
@@ -42,7 +42,7 @@ class Migrate
      *
      * @param string|object $database
      * @param \League\Flysystem\FilesystemInterface|null $filesystem
-     * @param NotifyInterface|string $notify
+     * @param \Roquie\Database\Notify\NotifyInterface|string $notify
      */
     public function __construct($database, FilesystemInterface $filesystem, $notify = 'logger')
     {
@@ -71,6 +71,8 @@ class Migrate
      */
     public function exists(): bool
     {
+        Whois::print($this->getNotify());
+
         return $this->migrationRepository->repositoryExists();
     }
 
@@ -81,6 +83,8 @@ class Migrate
      */
     public function drop(): Migrate
     {
+        Whois::print($this->getNotify());
+
         $this->getMigrator()->drop();
 
         return $this;
@@ -91,6 +95,8 @@ class Migrate
      */
     public function install(): Migrate
     {
+        Whois::print($this->getNotify());
+
         // Create a migration table in the
         // database if it does not exist.
         $this->exists() || $this->migrationRepository->createRepository();
@@ -104,6 +110,8 @@ class Migrate
      */
     public function run(array $options = []): Migrate
     {
+        Whois::print($this->getNotify());
+
         $this->getMigrator()->migrate($options);
 
         return $this;
@@ -115,6 +123,8 @@ class Migrate
      */
     public function rollback(array $options = []): Migrate
     {
+        Whois::print($this->getNotify());
+
         $this->getMigrator()->rollback($options);
 
         return $this;
@@ -125,13 +135,15 @@ class Migrate
      */
     public function reset(): Migrate
     {
+        Whois::print($this->getNotify());
+
         $this->getMigrator()->reset();
 
         return $this;
     }
 
     /**
-     * @return NotifyInterface
+     * @return \Roquie\Database\Notify\NotifyInterface
      */
     public function getNotify(): NotifyInterface
     {

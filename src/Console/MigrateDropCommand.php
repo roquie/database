@@ -21,7 +21,7 @@ class MigrateDropCommand extends Command
         $this
             ->setName('migrate:drop')
             ->setDescription('Drop all tables and views')
-            ->setHelp('Example of usage: rdb migrate:drop --dns pgsql:dbname=test;host=localhost;user=root');
+            ->setHelp('Example of usage: rdb migrate:drop --dsn pgsql:dbname=test;host=localhost;user=root');
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')
