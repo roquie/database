@@ -71,7 +71,7 @@ class MigrateFreshCommand extends Command
             ->run()
             ->close();
 
-        if ($input->hasOption('seed')) {
+        if ($input->getOption('seed')) {
             $this->getSeed($input, $output)
                  ->run($input->getOption('seed'))
                  ->close();

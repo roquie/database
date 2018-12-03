@@ -62,7 +62,7 @@ class MigrateUpCommand extends Command
 
         $migrate = Migrate::new($input->getOption('dsn'), $input->getOption('path'), $output);
 
-        if ($input->hasOption('drop')) {
+        if ($input->getOption('drop')) {
             $migrate->drop();
         }
 
@@ -71,7 +71,7 @@ class MigrateUpCommand extends Command
             ->run($options)
             ->close();
 
-        if ($input->hasOption('seed')) {
+        if ($input->getOption('seed')) {
             $this->getSeed($input, $output)
                  ->run($input->getOption('seed'))
                  ->close();
