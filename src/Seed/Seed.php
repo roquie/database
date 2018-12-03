@@ -44,6 +44,7 @@ class Seed
      * @param ContainerInterface $container
      * @param FilesystemInterface|null $filesystem
      * @param NotifyInterface|string $notify
+     * @throws \Roquie\Database\Exception\InvalidArgumentException
      */
     public function __construct(
         $database,
@@ -160,6 +161,7 @@ class Seed
      *
      * @param $database
      * @return mixed|\PDO
+     * @throws \Roquie\Database\Exception\InvalidArgumentException
      */
     private function database($database)
     {

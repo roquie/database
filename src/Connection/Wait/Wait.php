@@ -2,10 +2,9 @@
 
 namespace Roquie\Database\Connection\Wait;
 
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Roquie\Database\Connection\Exception\NotConnectedException;
+use Roquie\Database\PrettyLogger;
 
 final class Wait
 {
@@ -45,7 +44,7 @@ final class Wait
      */
     public function __construct(LoggerInterface $logger = null)
     {
-        $this->logger = $logger ?: $this->logger();
+        $this->logger = $logger ?: PrettyLogger::create(self::CHANNEL);
         $this->logger->info('Wait connection to database...');
     }
 
@@ -157,16 +156,5 @@ final class Wait
     private function toBeOrNotToBe($completed): bool
     {
         return $completed === $this->attempt && !static::$disableExit;
-    }
-
-    /**
-     * @return \Monolog\Logger
-     */
-    private function logger()
-    {
-        $logger = new Logger(self::CHANNEL);
-        $logger->pushHandler(new ErrorLogHandler());
-
-        return $logger;
     }
 }

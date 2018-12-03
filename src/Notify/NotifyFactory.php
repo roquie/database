@@ -2,10 +2,9 @@
 
 namespace Roquie\Database\Notify;
 
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Roquie\Database\Exception\InvalidArgumentException;
+use Roquie\Database\PrettyLogger;
 use Symfony\Component\Console\Output\Output;
 
 class NotifyFactory
@@ -23,7 +22,7 @@ class NotifyFactory
             case $notify === NotifyInterface::STDOUT:
                 return new NotifyStdout();
             case $notify === NotifyInterface::LOGGER:
-                return new NotifyLogger(self::defaultLoggerInstance());
+                return new NotifyLogger(PrettyLogger::create());
             case $notify === NotifyInterface::BLACKHOLE:
                 return new NotifyBlackhole();
             case $notify instanceof Output:
@@ -33,18 +32,5 @@ class NotifyFactory
             default:
                 throw InvalidArgumentException::forNotSupportedNotifier();
         }
-    }
-
-    /**
-     * Default logger instance.
-     *
-     * @return \Monolog\Logger
-     */
-    private static function defaultLoggerInstance()
-    {
-        $logger = new Logger(NotifyInterface::CHANNEL);
-        $logger->pushHandler(new ErrorLogHandler());
-
-        return $logger;
     }
 }
