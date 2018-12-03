@@ -6,7 +6,7 @@ use Roquie\Database\Console\Console;
 ini_set('date.timezone', 'UTC');
 
 $locations = [
-    __DIR__ . '/../../autoload.php',
+    __DIR__ . '/../../../autoload.php',
     __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/vendor/autoload.php'
 ];
