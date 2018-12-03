@@ -39,7 +39,7 @@ class MigrateUpCommand extends Command
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')
             ->addOption('drop', null, InputOption::VALUE_NONE, 'Drop database before run the database migrations.')
             ->addOption('step', null, InputOption::VALUE_OPTIONAL, 'Force the migrations to be run so they can be rolled back individually.')
-            ->addOption('seed', null, InputOption::VALUE_OPTIONAL, 'Indicates if the seed task should be re-run.')
+            ->addOption('seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run.')
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to use.', Migrate::DEFAULT_PATH);
     }
 
@@ -73,7 +73,7 @@ class MigrateUpCommand extends Command
 
         if ($input->getOption('seed')) {
             $this->getSeed($input, $output)
-                 ->run($input->getOption('seed'))
+                 ->run()
                  ->close();
         }
     }

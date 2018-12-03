@@ -38,7 +38,7 @@ class MigrateFreshCommand extends Command
 
         $this
             ->addOption('dsn', 'd', InputOption::VALUE_REQUIRED, 'DNS string for connect with database.')
-            ->addOption('seed', null, InputOption::VALUE_OPTIONAL, 'Indicates if the seed task should be re-run.')
+            ->addOption('seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run.')
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to use', Migrate::DEFAULT_PATH);
     }
 
@@ -73,7 +73,7 @@ class MigrateFreshCommand extends Command
 
         if ($input->getOption('seed')) {
             $this->getSeed($input, $output)
-                 ->run($input->getOption('seed'))
+                 ->run()
                  ->close();
         }
 
