@@ -34,6 +34,11 @@ final class Wait
     private $every = self::DEFAULT_EVERY_SECOND;
 
     /**
+     * @var bool
+     */
+    private static $disableExit = false;
+
+    /**
      * Wait constructor.
      *
      * @param \Psr\Log\LoggerInterface|null $logger
@@ -85,6 +90,11 @@ final class Wait
         return new static();
     }
 
+    public static function disableExitOnFail()
+    {
+        static::$disableExit = true;
+    }
+
     /**
      * @param string $dsn
      * @param array $params
@@ -116,9 +126,14 @@ final class Wait
             try {
                 $database = $this->connection->alive($dsn);
             } catch (NotConnectedException $e) {
-                $this->logger->warn(sprintf('%s Attempt no. %d', $e->getMessage(), $completed + 1));
-                sleep($this->every);
                 $completed++;
+                $this->logger->warn(sprintf('%s Attempt no. %d', $e->getMessage(), $completed));
+                sleep($this->every);
+
+                if ($this->toBeOrNotToBe($completed)) {
+                    $this->logger->info('Exit from application because connection not established.');
+                    exit(1);
+                }
 
                 continue;
             }
@@ -131,6 +146,17 @@ final class Wait
 
             $completed++;
         }
+    }
+
+    /**
+     * Exit from application if connection does not successful or not.
+     *
+     * @param $completed
+     * @return bool
+     */
+    private function toBeOrNotToBe($completed): bool
+    {
+        return $completed === $this->attempt && !static::$disableExit;
     }
 
     /**
