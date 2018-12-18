@@ -6,8 +6,8 @@ interface WaitInterface
 {
     /**
      * @param string $dsn
+     * @param array $options
      * @return mixed
-     * @throws \Roquie\Database\Connection\Exception\NotConnectedException
      */
-    public function alive(string $dsn);
+    public function alive(string $dsn, array $options = []);
 }

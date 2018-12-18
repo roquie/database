@@ -2,6 +2,7 @@
 
 namespace Roquie\Database\Connection\Wait;
 
+use PDO;
 use Psr\Log\LoggerInterface;
 use Roquie\Database\Connection\Exception\NotConnectedException;
 use Roquie\Database\PrettyLogger;
@@ -38,12 +39,21 @@ final class Wait
     private static $disableExit = false;
 
     /**
+     * Database options.
+     *
+     * @var array
+     */
+    private $options;
+
+    /**
      * Wait constructor.
      *
+     * @param array $options
      * @param \Psr\Log\LoggerInterface|null $logger
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct(array $options = [], LoggerInterface $logger = null)
     {
+        $this->options = $options;
         $this->logger = $logger ?: PrettyLogger::create(self::CHANNEL);
         $this->logger->info('Wait connection to database...');
     }
@@ -55,6 +65,17 @@ final class Wait
     public function with(WaitInterface $connection): Wait
     {
         $this->connection = $connection;
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     * @return \Roquie\Database\Connection\Wait\Wait
+     */
+    public function options(array $options): Wait
+    {
+        $this->options = $options;
 
         return $this;
     }
@@ -115,6 +136,32 @@ final class Wait
     }
 
     /**
+     * TODO refactor Connection Waiter.
+     *
+     * @param string $dsn
+     * @param array $params
+     */
+    public static function persistent(string $dsn, ...$params)
+    {
+        if (count($params) === 1) {
+            $callback = $params[0];
+        } else {
+            [$attempts, $callback] = $params;
+        }
+
+        $wait = new static();
+        $wait->with(new PdoWait());
+        $wait->attempts($attempts ?? self::DEFAULT_ATTEMPTS);
+        $wait->options([
+            PDO::ATTR_PERSISTENT => true
+        ]);
+
+        $wait->start($dsn, $callback);
+
+        return;
+    }
+
+    /**
      * @param string $dsn
      * @param callable $callback
      */
@@ -123,7 +170,7 @@ final class Wait
         $completed = 0;
         while ($completed < $this->attempt) {
             try {
-                $database = $this->connection->alive($dsn);
+                $database = $this->connection->alive($dsn, $this->options);
             } catch (NotConnectedException $e) {
                 $completed++;
                 $this->logger->warn(sprintf('%s Attempt no. %d', $e->getMessage(), $completed));

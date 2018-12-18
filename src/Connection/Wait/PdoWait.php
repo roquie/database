@@ -10,17 +10,30 @@ class PdoWait implements WaitInterface
 {
     /**
      * @param string $dsn
+     * @param array $options
      * @return mixed
      * @throws \Roquie\Database\Connection\Exception\NotConnectedException
      */
-    public function alive(string $dsn)
+    public function alive(string $dsn, array $options = [])
     {
         try {
-            $pdo = new PDO($dsn, null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $pdo = new PDO($dsn, null, null, $this->opts($options));
         } catch (PDOException $e) {
             throw NotConnectedException::forNotConnected($dsn);
         }
 
         return $pdo;
+    }
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    private function opts(array $options)
+    {
+        return array_merge(
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
+            $options
+        );
     }
 }
