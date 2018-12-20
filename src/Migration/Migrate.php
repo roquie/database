@@ -183,6 +183,8 @@ class Migrate
     /**
      * @param $database
      * @return \Roquie\Database\Migration\Repository\MigrationRepositoryInterface
+     * @throws \Roquie\Database\Exception\InvalidArgumentException
+     * @throws \Roquie\Database\Migration\Exception\InvalidArgumentException
      */
     protected function repo($database): MigrationRepositoryInterface
     {
