@@ -31,9 +31,6 @@ class PdoWait implements WaitInterface
      */
     private function opts(array $options)
     {
-        return array_merge(
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
-            $options
-        );
+        return [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] + $options;
     }
 }
