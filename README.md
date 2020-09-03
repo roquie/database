@@ -1,3 +1,8 @@
+New maintained version of this package can be found at: https://github.com/spacetab-io/rdb-php (partially compatible)
+This version archived as is and no longer maintained.
+
+------------------------
+
 Rdb
 ===
 
